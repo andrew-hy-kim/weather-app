@@ -16,7 +16,15 @@
 
         <h1>Weather App</h1>
 
-        <div id="app">Checking the weather near you...</div>
+        <div id="city-name"></div>
+        <div id="conditions"></div>
+        <div id="temp"></div>
+        <div id="current-time"></div>
+
+
+
+
+
 
 
 
@@ -32,9 +40,26 @@
 
                 request.onload = function() {
                     console.log(request.response);
+                        
+                        var fConversion = (request.response.data[0].temp * 9 / 5) + 32;
+                        var Farenheit = parseInt(fConversion) + " F";
+
+                        document.getElementById("city-name").innerHTML = request.response.data[0].city_name;
+                        document.getElementById("conditions").innerHTML = request.response.data[0].weather.description;
+                        document.getElementById("temp").innerHTML = Farenheit;
+                        document.getElementById("current-time").innerHTML = request.response.data[0].datetime;
                 }
 
                 request.send();
+
+                /** git status
+                 
+
+
+
+
+
+                
 
 
         </script>
