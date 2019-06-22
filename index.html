@@ -19,47 +19,58 @@
         <div id="city-name"></div>
         <div id="conditions"></div>
         <div id="temp"></div>
-        <div id="current-time"></div>
-
-
-
-
-
-
-
+        <div id="current-date"></div>
+        <div id="day-and-date"></div>
 
         <script>
                 // enter code here
                 var url = "http://api.weatherbit.io/v2.0/current?city=LosAngeles,CA&key=f96345b7d7ac480ca36e40039097dd8d"
 
                 var request = new XMLHttpRequest();
-
                 request.open('GET', url);
-
                 request.responseType = 'json';
 
                 request.onload = function() {
                     console.log(request.response);
                         
-                        var fConversion = (request.response.data[0].temp * 9 / 5) + 32;
-                        var Farenheit = parseInt(fConversion) + " F";
+                    var fConversion = (request.response.data[0].temp * 9 / 5) + 32;
+                    var Farenheit = parseInt(fConversion) + " °F";
+                    
+                    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    
+                    var d = new Date();
+                    var day = days[d.getDay()];
+                    var date = d.getDate();
+                    var month = months[d.getMonth()];
 
-                        document.getElementById("city-name").innerHTML = request.response.data[0].city_name;
-                        document.getElementById("conditions").innerHTML = request.response.data[0].weather.description;
-                        document.getElementById("temp").innerHTML = Farenheit;
-                        document.getElementById("current-time").innerHTML = request.response.data[0].datetime;
+                    function dateSuffix(date) {
+                        if (date % 10 == 1) {
+                                return date + "st";
+                        } else if (date % 10 == 2) {
+                                return date + "nd";
+                        } else if (date % 10 == 3) {
+                                return date + "rd";
+                        } else {
+                                return date + "th";
+                        }
+                    }
+
+                    document.getElementById("city-name").innerHTML = request.response.data[0].city_name;
+                    document.getElementById("conditions").innerHTML = request.response.data[0].weather.description;
+                    document.getElementById("temp").innerHTML = Farenheit;
+                    document.getElementById("day-and-date").innerHTML = day + ", " + month + " " + dateSuffix(date);
                 }
 
                 request.send();
 
                 /** git status
+                 * git add .
+                 * git commit -m (message (#num))
+                 * git push
+                **/ 
+               
                  
-
-
-
-
-
-                
 
 
         </script>
