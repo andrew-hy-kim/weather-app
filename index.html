@@ -4,17 +4,72 @@
         <title>Project Title</title>
 
         <style type="text/css">
-                body {
-                        margin-left: auto;
-                        margin-right:auto;
-                        max-width: 40em;
-                        width:88%;
-                }
+            body {
+                background-color: lightblue;
+                font-family: Verdana;
+                font-size: 20px;
+            }
+
+            h1 {
+                color: black;
+                text-align: center;
+            }
+
+            #city-input {
+                
+            }
+
+            button {
+                font-size: 25px;
+                font-weight: bold;
+                display: block;
+                margin: 30px;
+                width: 200px;
+                height: 50px;
+            }
+
+            #city-name {
+                font-family: Verdana;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            #conditions {
+                font-family: Verdana;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            #temp {
+                font-family: Verdana;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            #current-date {
+                font-family: Verdana;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            #day-and-date {
+                font-family: Verdana;
+                font-size: 15px;
+                text-align: center;
+            }
+
         </style>
 </head>
 <body>
 
-        <h1>Weather App</h1>
+        <h1>Weather!!!</h1>
+
+        <div id="container"></div>
+            <form>
+            <input id="city-input" type="text" placeholder="Enter City, State">
+            </form>
+
+        <button type="button" id="find-weather">Find Weather!</button>
 
         <div id="city-name"></div>
         <div id="conditions"></div>
@@ -22,12 +77,20 @@
         <div id="current-date"></div>
         <div id="day-and-date"></div>
 
+
         <script>
                 // enter code here
-                var url = "http://api.weatherbit.io/v2.0/current?city=LosAngeles,CA&key=f96345b7d7ac480ca36e40039097dd8d"
-
+                
+               /* function getCity(request) {
+                    var cityName = document.getElementById("city-input").value;
+                    console.log(cityName);
+                    var url = "http://api.weatherbit.io/v2.0/current?city=" + cityName.replace(/\s/g, '') + "&key=f96345b7d7ac480ca36e40039097dd8d";
+                    request.open('GET', url);
+                    request.send();
+                }*/
+                
                 var request = new XMLHttpRequest();
-                request.open('GET', url);
+                
                 request.responseType = 'json';
 
                 request.onload = function() {
@@ -36,7 +99,7 @@
                     var fConversion = (request.response.data[0].temp * 9 / 5) + 32;
                     var Farenheit = parseInt(fConversion) + " °F";
                     
-                    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", " Nov", "Dec"];
                     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
                     
                     var d = new Date();
@@ -60,9 +123,17 @@
                     document.getElementById("conditions").innerHTML = request.response.data[0].weather.description;
                     document.getElementById("temp").innerHTML = Farenheit;
                     document.getElementById("day-and-date").innerHTML = day + ", " + month + " " + dateSuffix(date);
+
                 }
 
-                request.send();
+                document.getElementById("find-weather").onclick = function () {
+                    var cityName = document.getElementById("city-input").value;
+                    console.log(cityName);
+                    var url = "http://api.weatherbit.io/v2.0/current?city=" + cityName.replace(/\s/g, '') + "&key=f96345b7d7ac480ca36e40039097dd8d";
+                    request.open('GET', url);
+                    request.send();
+                };
+                
 
                 /** git status
                  * git add .
